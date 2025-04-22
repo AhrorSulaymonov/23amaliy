@@ -4,6 +4,7 @@ import { FaHeart, FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleHeart } from "../../contex/slices/wishlistSlice";
 import { useLocation } from "react-router";
+import { addToCart, remove } from "../../contex/slices/cartSlice";
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
@@ -38,6 +39,26 @@ const Product = ({ product }) => {
             <CiHeart color="red" />
           )}
         </button>
+
+        {location.pathname === "/cart" ? (
+          <button
+            onClick={() => dispatch(remove(product))}
+            className="product__card__info__cart__btn"
+          >
+            Delete
+          </button>
+        ) : (
+          <button
+            onClick={() => dispatch(addToCart(product))}
+            className="product__card__info__cart__btn"
+          >
+            {CartData.some((element) => element.id === product.id) ? (
+              <p>Added card</p>
+            ) : (
+              <p>Add to Cart</p>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );
